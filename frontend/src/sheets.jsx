@@ -165,6 +165,7 @@ export function confirmSheet(opts) {
 // string literals written inside a t() call, so copy parked in the catalog and passed in as a
 // variable is invisible to it — it would quietly stay English in every language.
 const PLAN_COPY = {
+  'vshape-home': () => ({ name: t('V-shape Home'), about: t('Three full-body days with extra back and shoulder work. Dumbbells, EZ bar and a flat bench.') }),
   ppl: () => ({ name: t('Push / Pull / Legs'), about: t('Push, pull and legs each get their own day.') }),
   'upper-lower': () => ({ name: t('Upper / Lower'), about: t('Upper body twice, lower body twice.') }),
   'full-body': () => ({ name: t('Full Body'), about: t('Three sessions, the whole body each time.') }),
@@ -179,6 +180,10 @@ const PLAN_COPY = {
 export function loadStarterPlan(planId, profile) {
   const plan = buildStarterPlan(planId, profile ? profileEquipment(profile) : undefined)
   if (!plan) return false
+  if (planId === 'vshape-home') for (const r of plan.routines) {
+    r.note = t('First two weeks: two sets. Leave 2–3 reps in reserve. Use a stable flat bench or floor press.')
+    for (const ex of r.ex) if (ex.id === '2960') ex.note = t('Reps per leg')
+  }
   update(st => {
     // Loading the same plan again reuses the routines it added last time (same name, same
     // exercises) for the weekdays instead of a second Upper A, Lower A, ... under the same names.

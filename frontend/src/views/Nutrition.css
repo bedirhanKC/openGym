@@ -1,0 +1,33 @@
+.nutrition-page { padding-bottom: 20px; }
+.nutrition-page .hdr { gap: 10px; }
+.nutrition-date .field { min-width: 0; flex: 1; }
+.nutrition-date { gap: 8px; }
+.nutrition-date .btn { width: 44px; flex: 0 0 44px; padding-inline: 8px; }
+.nutrition-date input { color: var(--label); }
+.nutrition-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.nutrition-stat { min-width: 0; }
+.nutrition-stat strong { font-size: 24px; line-height: 1.5; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.nutrition-track { height: 4px; background: var(--surface-3); border-radius: 5px; margin-block: 8px 4px; overflow: hidden; }
+.nutrition-track i { height: 100%; background: var(--acc); display: block; }
+.nutrition-wide { grid-column: 1 / -1; margin: 0; }
+.nutrition-form { display: flex; flex-direction: column; gap: 12px; }
+.nutrition-form label { display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: var(--label-2); }
+.nutrition-form .field { width: 100%; min-width: 0; box-sizing: border-box; }
+.nutrition-form .nutrition-grid { gap: 10px; }
+.nutrition-form .area { min-height: 80px; }
+.nutrition-actions { gap: 8px; flex-wrap: wrap; margin-block: 10px; }
+.nutrition-actions .btn { width: auto; flex: 1; min-width: max-content; }
+.nutrition-actions .field { flex: 1; min-width: 100px; }
+.nutrition-food { display: flex; gap: 8px; padding-block: 12px; border-bottom: 1px solid var(--sep); }
+.nutrition-food:last-child { border-bottom: 0; }
+.nutrition-food .grow { min-width: 0; overflow-wrap: anywhere; }
+.nutrition-row-actions { display: flex; flex-direction: column; }
+.nutrition-note { white-space: pre-wrap; margin-block: 5px 0; }
+.nutrition-page summary { cursor: pointer; font-weight: 600; min-height: 34px; }
+.nutrition-calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center; margin-top: 12px; }
+.nutrition-calendar-grid button { min-height: 40px; border: 0; border-radius: 12px; background: var(--surface-2); color: var(--label); position: relative; }
+.nutrition-calendar-grid button.selected { background: var(--acc); color: var(--on-acc); }
+.nutrition-calendar-grid button:disabled { opacity: .3; }
+.nutrition-calendar-grid i { position: absolute; bottom: 4px; left: calc(50% - 2px); width: 4px; height: 4px; background: currentColor; border-radius: 50%; }
+.nutrition-week button { width: 100%; display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; background: none; color: var(--label); border: 0; }
+@media (min-width: 600px) { .nutrition-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .nutrition-row-actions { flex-direction: row; } }

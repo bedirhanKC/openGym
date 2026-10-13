@@ -8,6 +8,7 @@
 import { uid } from './format.js'
 import { EXIDX } from './exercises.js'
 import { eqAvailable, ALL_EQUIPMENT } from './equipment.js'
+import { VSHAPE } from './vshape.js'
 
 const PPL = [
   ['push', 'Push Day', 'barbell', [['0025', 4, 8], ['0047', 3, 10], ['0426', 3, 10], ['0334', 3, 12], ['0241', 3, 12], ['0251', 3, 10]]],
@@ -37,6 +38,7 @@ const FIVE_BY_FIVE = [
 // [weekday, routineKey] — weekday is a DAYN index, so 1 is Monday. Fixed weeks only: every
 // plan repeats the same seven days, which is all the weekly plan model can represent.
 const PLANS = {
+  'vshape-home': { routines: VSHAPE, schedule: [[1, 'vshape-a'], [3, 'vshape-b'], [5, 'vshape-c']] },
   ppl: { routines: PPL, schedule: [[1, 'push'], [3, 'pull'], [5, 'legs']] },
   'upper-lower': { routines: UPPER_LOWER, schedule: [[1, 'upper-a'], [2, 'lower-a'], [4, 'upper-b'], [5, 'lower-b']] },
   'full-body': { routines: FULL_BODY, schedule: [[1, 'fb-a'], [3, 'fb-b'], [5, 'fb-c']] },
@@ -44,7 +46,7 @@ const PLANS = {
 }
 
 const build = routines =>
-  routines.map(([, name, emoji, list]) => ({ id: uid(), name, emoji, ex: list.map(([id, sets, reps]) => ({ id, sets, reps, weight: 0 })) }))
+  routines.map(([, name, emoji, list]) => ({ id: uid(), name, emoji, ex: list.map(([id, sets, reps, extra]) => ({ id, sets, reps, weight: 0, ...extra })) }))
 
 // Fresh routine objects (new ids) — [push, pull, legs]. The demo build seeds a history on
 // top of exactly these three, so this entry point keeps its shape.
@@ -104,14 +106,14 @@ const fitRoutines = (routines, equipment) => {
   const fitted = routines.map(([key, name, emoji, list]) => {
     const taken = new Set(list.map(([id]) => id))
     const out = []
-    for (const [id, sets, reps] of list) {
+    for (const [id, sets, reps, extra] of list) {
       const ex = EXIDX[id]
-      if (!ex || eqAvailable(equipment, ex)) { out.push([id, sets, reps]); continue }
+      if (!ex || eqAvailable(equipment, ex)) { out.push([id, sets, reps, extra]); continue }
       const sub = substituteFor(ex, equipment, taken)
       if (!sub) { dropped++; continue }
       taken.add(sub.id)
       swapped++
-      out.push([sub.id, sets, reps])
+      out.push([sub.id, sets, reps, extra])
     }
     return [key, name, emoji, out]
   }).filter(([, , , list]) => list.length)
@@ -127,6 +129,11 @@ export const buildStarterPlan = (id, equipment) => {
   const fit = equipment ? fitRoutines(plan.routines, equipment) : null
   const source = fit ? fit.routines : plan.routines
   const routines = build(source)
+  if (id === 'vshape-home') for (const r of routines) {
+    r.prog = 'double'
+    r.note = 'Three nonconsecutive days. Start with two work sets per exercise for the first two weeks. Keep 2–3 reps in reserve; use the top of the rep range before adding load. Bench press requires a stable flat bench; use dumbbell floor press if unavailable. No incline bench or pull-up bar required.'
+    for (const ex of r.ex) if (ex.id === '2960') ex.note = 'Reps per leg. Start without weights if needed.'
+  }
   // key → the id just minted for it, so the schedule below names its routine
   const byKey = Object.fromEntries(source.map(([key], i) => [key, routines[i].id]))
   return {

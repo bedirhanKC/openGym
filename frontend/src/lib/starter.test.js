@@ -32,8 +32,9 @@ const APPROVED = {
 const shape = r => r.ex.map(e => [e.id, e.sets, e.reps])
 
 describe('starter plan catalog', () => {
-  it('offers exactly the four plans, with the day count read off the schedule', () => {
+  it('offers the home plan and existing plans, with day counts read off the schedule', () => {
     expect(starterPlanOptions()).toEqual([
+      { id: 'vshape-home', days: 3 },
       { id: 'ppl', days: 3 }, { id: 'upper-lower', days: 4 },
       { id: 'full-body', days: 3 }, { id: '5x5', days: 3 },
     ])

@@ -60,7 +60,7 @@ if you want to try it before installing anything.
 
 - A routine per weekday over a library of **over 5,600 exercises** with animated demos, searchable and
   browsable by muscle on a body map. Filter by the equipment you own.
-- Four starter plans (Push/Pull/Legs, Upper/Lower, Full Body, 5×5) that load as ordinary,
+- Five starter plans (V-shape Home, Push/Pull/Legs, Upper/Lower, Full Body, 5×5) that load as ordinary,
   editable routines.
 - Move a session to another day without touching the weekly plan. The week starts on Monday or
   Sunday, your choice.
@@ -87,6 +87,9 @@ if you want to try it before installing anything.
   and rest per set, and a scroll wheel for any rest time up to 15 minutes.
 
 **Progress**
+
+- A manual [food diary](docs/NUTRITION.md) with meals, portions, nutrient totals, water, favourites, a calendar, goals and CSV export. Unknown values stay unknown; entries participate in backup and sync.
+- A [V-shape Home](docs/VSHAPE.md) starter for dumbbells, an EZ bar and a flat bench, using the existing editable routines and progression rules.
 
 - Progression rules per routine or per exercise: linear, Greyskull LP, double progression through a
   visible rep range, triple progression (reps, then sets, then load), or adding time. Each target explains why it is that number; missed reps never
